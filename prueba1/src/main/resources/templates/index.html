@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurante</title>
+</head>
+<body>
+<div th:replace="~{components/nav :: nav}"></div>
+
+<h1>Mesas</h1>
+    <p th:each="mesa : ${mesas}">
+        <a th:href="@{/mesas/{id}(id=${mesa.id})}" ><button th:text="|Mesa nº ${mesa.id}|"></button></a>
+    </p>
+
+<h1>Platos</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="plato : ${platos}">
+        <td th:text="${plato.nombre}"></td>
+        <td th:text="|${plato.precio}€|"></td>
+        <td><a th:href="@{/platos/{nombre}/editar(nombre=${plato.nombre})}">Modificar plato</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

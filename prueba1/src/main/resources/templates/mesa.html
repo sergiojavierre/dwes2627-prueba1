@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="|Mesa ${mesa.id}|">Mesa</title>
+</head>
+<body>
+<div th:replace="~{components/nav :: nav}"></div>
+
+<h1 th:text="|Mesa ${mesa.id}|"></h1>
+<form method="post" th:action="@{/mesas/{id}/limpiar(id=${mesa.id})}">
+    <button type="submit">Limpiar mesa</button>
+</form>
+
+<h2>Platos disponibles</h2>
+<ul>
+    <li th:each="plato : ${platos}">
+        <form method="post" th:action="@{/mesas/{id}/pedidos(id=${mesa.id})}">
+            <input type="hidden" name="plato" th:value="${plato.nombre}">
+            <button type="submit" th:text="${plato.nombre}"></button>
+        </form>
+    </li>
+</ul>
+
+<h2>Pedido</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Plato</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pedido : ${pedidos}">
+        <td th:text="${pedido.plato.nombre}"></td>
+        <td th:text="${pedido.cantidad}"></td>
+        <td th:text="|${pedido.plato.precio}€|"></td>
+    </tr>
+    </tbody>
+</table>
+<p>Coste total: <b th:text="|${total}€|"></b></p>
+</body>
+</html>
